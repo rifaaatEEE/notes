@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics Notes</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: linear-gradient(120deg, #0f2027, #2c5364); /* Deep Blue-Green Theme */
+            padding: 20px;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: inset 0 5px 10px rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            max-width: 600px;
+            margin: auto;
+            transition: 0.4s;
+        }
+        .container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        h1 {
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+        .notes-list {
+            list-style: none;
+            padding: 0;
+        }
+        .notes-list li {
+            background: linear-gradient(90deg, #38ef7d, #11998e);
+            color: white;
+            margin: 10px 0;
+            padding: 14px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        .notes-list li a {
+            color: white;
+            text-decoration: none;
+        }
+        .notes-list li:hover {
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            transform: scale(1.08);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .instructor-info {
+            margin-top: 20px;
+            font-size: 14px;
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .instructor-info:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>📚 Physics Notes</h1>
+        <p>Click on a note to download:</p>
+        <ul id="notesList" class="notes-list"></ul>
+
+        <div class="instructor-info">
+            <p><strong>Instructor:</strong> Rifat Islam Rony</p>
+            <p>Undergraduate Student</p>
+            <p>Department of EEE</p>
+            <p>Jashore University of Science & Technology</p>
+        </div>
+    </div>
+
+    <script>
+        // Retrieve list of PDFs from localStorage
+        const notes = JSON.parse(localStorage.getItem("pdfNotes")) || [];
+
+        const notesList = document.getElementById("notesList");
+
+        if (notes.length > 0) {
+            notes.forEach(note => {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `<a href="${note}" download>📄 ${note}</a>`;
+                notesList.appendChild(listItem);
+            });
+        } else {
+            notesList.innerHTML = "<p>No notes available yet.</p>";
+        }
+    </script>
+
+</body>
+</html>

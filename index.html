@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Physics Notes</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: linear-gradient(120deg, #1e3c72, #2a5298);
+            padding: 20px;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            max-width: 500px;
+            margin: auto;
+        }
+        h1 {
+            background: linear-gradient(90deg, #38ef7d, #11998e);
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        input {
+            padding: 12px;
+            border: 2px solid #00c6ff;
+            border-radius: 10px;
+            width: 80%;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        button {
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            font-weight: bold;
+            border-radius: 10px;
+            transition: 0.3s;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #38ef7d, #11998e);
+        }
+        .notes-link {
+            display: block;
+            margin-top: 15px;
+            background: linear-gradient(90deg, #38ef7d, #11998e);
+            color: white;
+            padding: 12px 15px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+        .notes-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+        .notes-list li {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 10px;
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .remove-btn {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .remove-btn:hover {
+            background: darkred;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>📖 Add a Physics Note</h1>
+        <input type="text" id="pdfInput" placeholder="Enter file name (e.g., Newtons_Laws.pdf)">
+        <button onclick="savePDFName()">➕ Add Note</button>
+
+        <h2>Your Notes</h2>
+        <ul id="notesList" class="notes-list"></ul>
+
+        <p><a class="notes-link" href="downloads.html">📚 View Notes</a></p>
+    </div>
+
+    <script>
+        function savePDFName() {
+            const pdfName = document.getElementById("pdfInput").value.trim();
+            if (pdfName) {
+                let notes = JSON.parse(localStorage.getItem("pdfNotes")) || [];
+                notes.push(pdfName);
+                localStorage.setItem("pdfNotes", JSON.stringify(notes));
+                document.getElementById("pdfInput").value = "";
+                loadNotes(); // Reload the list
+            } else {
+                alert("❌ Please enter a valid file name.");
+            }
+        }
+
+        function loadNotes() {
+            const notes = JSON.parse(localStorage.getItem("pdfNotes")) || [];
+            const notesList = document.getElementById("notesList");
+            notesList.innerHTML = "";
+
+            notes.forEach((note, index) => {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `
+                    ${note}
+                    <button class="remove-btn" onclick="removeNote(${index})">❌ Remove</button>
+                `;
+                notesList.appendChild(listItem);
+            });
+        }
+
+        function removeNote(index) {
+            let notes = JSON.parse(localStorage.getItem("pdfNotes")) || [];
+            notes.splice(index, 1);
+            localStorage.setItem("pdfNotes", JSON.stringify(notes));
+            loadNotes();
+        }
+
+        // Load notes when page loads
+        loadNotes();
+    </script>
+
+</body>
+</html>
