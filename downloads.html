@@ -90,15 +90,18 @@
     </div>
 
     <script>
-        // Retrieve list of PDFs from localStorage
-        const notes = JSON.parse(localStorage.getItem("pdfNotes")) || [];
+        // List of available notes (update these URLs if filenames change)
+        const notes = [
+            { name: "গতি ম্যাথ", url: "https://rifaaateee.github.io/notes/গতি_ম্যাথ.pdf" },
+            { name: "গতি সুজলশীল", url: "https://rifaaateee.github.io/notes/গতি_সুজলশীল.pdf" }
+        ];
 
         const notesList = document.getElementById("notesList");
 
         if (notes.length > 0) {
             notes.forEach(note => {
                 const listItem = document.createElement("li");
-                listItem.innerHTML = `<a href="${note}" download>📄 ${note}</a>`;
+                listItem.innerHTML = `<a href="${note.url}" download>📄 ${note.name}</a>`;
                 notesList.appendChild(listItem);
             });
         } else {
